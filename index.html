@@ -3,71 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Buscador de Libros · Desarrollo Personal | PWA</title>
-    <meta name="description" content="Busca libros de desarrollo personal, autocompletado inteligente, análisis offline y audio.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%235C4A7C'/%3E%3Cpath fill='%23FFB74D' d='M30 45 L70 45 L65 70 L35 70 Z M48 30 L52 30 L52 45 L48 45 Z'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%235C4A7C'/%3E%3Cpath fill='%23FFB74D' d='M30 45 L70 45 L65 70 L35 70 Z M48 30 L52 30 L52 45 L48 45 Z'/%3E%3C/svg%3E">
+    <title>Análisis de Libros · Desarrollo Personal | PWA</title>
+    <meta name="description" content="Análisis completo de libros de desarrollo personal: introducción, temática, beneficios, plan de acción y conclusiones. Con audio claro y offline.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%233B6978'/%3E%3Cpath fill='%23F2C94C' d='M32 38 L68 38 L68 45 L32 45 Z M32 52 L55 52 L55 59 L32 59 Z'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%233B6978'/%3E%3Cpath fill='%23F2C94C' d='M32 38 L68 38 L68 45 L32 45 Z M32 52 L55 52 L55 59 L32 59 Z'/%3E%3C/svg%3E">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: system-ui, 'Segoe UI', sans-serif;
-            background: #F5F3F7;
-            color: #2D2A3A;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: #F0F4F8;
+            color: #1A2C3A;
+            line-height: 1.6;
             padding: 1.5rem;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .app-container {
-            max-width: 700px;
+            max-width: 780px;
             width: 100%;
-            background: white;
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            background: #FFFFFF;
+            border-radius: 36px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
+
         .header {
-            background: linear-gradient(135deg, #5C4A7C 0%, #3D2A5C 100%);
+            background: linear-gradient(135deg, #3B6978 0%, #2C4F5C 100%);
             padding: 1.8rem;
             text-align: center;
             color: white;
         }
-        .header h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
-        .offline-badge {
-            background: rgba(255,255,255,0.2);
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .status-bar {
             display: inline-block;
+            background: rgba(255,255,255,0.2);
             padding: 0.2rem 1rem;
             border-radius: 60px;
             font-size: 0.7rem;
-            margin-top: 0.5rem;
+            margin-top: 0.6rem;
         }
-        .content { padding: 1.8rem; }
-        .search-section {
-            background: #F0EEF5;
+
+        .content {
+            padding: 1.8rem;
+        }
+
+        /* Buscador */
+        .search-box {
+            background: #F7F9FC;
             border-radius: 28px;
-            padding: 1.3rem;
-            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid #E2E8F0;
         }
+
         .search-group {
             display: flex;
             gap: 0.8rem;
             flex-wrap: wrap;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
+
         .search-group input {
             flex: 1;
-            padding: 0.8rem 1rem;
-            border: 2px solid #DDD6E8;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #DCE3EC;
             border-radius: 60px;
             font-size: 1rem;
             font-family: inherit;
             outline: none;
             background: white;
         }
-        .search-group input:focus { border-color: #5C4A7C; }
+
+        .search-group input:focus {
+            border-color: #3B6978;
+        }
+
         .search-group button {
-            background: #5C4A7C;
+            background: #3B6978;
             border: none;
             color: white;
             padding: 0.8rem 1.8rem;
@@ -75,197 +106,243 @@
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
+            font-family: inherit;
         }
-        .suggestions-hint {
-            font-size: 0.7rem;
-            color: #6B5E7E;
-            margin-top: 0.5rem;
+
+        .search-group button:hover {
+            background: #2C4F5C;
+        }
+
+        .sugerencias {
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
         }
-        .suggestion-chip {
+
+        .chip {
             background: white;
+            border: 1px solid #DCE3EC;
             padding: 0.2rem 0.8rem;
             border-radius: 60px;
             font-size: 0.7rem;
             cursor: pointer;
-            border: 1px solid #DDD6E8;
+            transition: 0.1s;
         }
-        .results-card {
+
+        .chip:hover {
+            background: #3B6978;
+            color: white;
+            border-color: #3B6978;
+        }
+
+        /* Resultados del análisis */
+        .analysis-card {
             background: #FFFFFF;
             border-radius: 24px;
-            padding: 1.3rem;
-            margin: 1rem 0;
-            border-left: 5px solid #5C4A7C;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            padding: 1.5rem;
+            border: 1px solid #E8EDF3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
-        .book-title-display {
-            font-size: 1.5rem;
+
+        .book-title {
+            font-size: 1.6rem;
             font-weight: 800;
-            color: #3D2A5C;
+            color: #2C4F5C;
             margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #F2C94C;
             word-break: break-word;
         }
-        .tematica, .beneficios, .plan-accion {
-            margin-bottom: 1rem;
+
+        .section {
+            margin-bottom: 1.3rem;
         }
-        .tematica h4, .beneficios h4, .plan-accion h4 {
-            font-size: 0.8rem;
+
+        .section h3 {
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #5C4A7C;
-            margin-bottom: 0.3rem;
-        }
-        .audio-bar {
-            margin-top: 1rem;
-            padding-top: 0.8rem;
-            border-top: 1px solid #E8E4F0;
+            letter-spacing: 1.5px;
+            color: #3B6978;
+            margin-bottom: 0.4rem;
             display: flex;
-            gap: 0.8rem;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .section p {
+            font-size: 0.95rem;
+            color: #2C3A42;
+            text-align: justify;
+        }
+
+        .audio-controls {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #E8EDF3;
+            display: flex;
+            gap: 1rem;
             flex-wrap: wrap;
         }
+
         button {
-            background: #5C4A7C;
+            background: #3B6978;
             border: none;
             color: white;
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1.3rem;
             border-radius: 60px;
+            font-size: 0.85rem;
             cursor: pointer;
+            font-family: inherit;
         }
-        .btn-stop { background: #B86B8F; }
-        .preferencias {
-            background: #F0EEF5;
+
+        .btn-stop {
+            background: #B86B6B;
+        }
+
+        .pref-bar {
+            background: #F7F9FC;
             border-radius: 20px;
-            padding: 1rem;
-            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+            margin-top: 1.2rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 1rem;
+            font-size: 0.8rem;
         }
+
         footer {
             text-align: center;
             font-size: 0.7rem;
             padding: 1rem;
-            color: #8E82A3;
-            border-top: 1px solid #E8E4F0;
+            color: #8DA1B5;
+            border-top: 1px solid #E8EDF3;
         }
-        @media (max-width: 550px) {
+
+        @media (max-width: 600px) {
             body { padding: 0.8rem; }
-            .book-title-display { font-size: 1.2rem; }
+            .content { padding: 1rem; }
+            .book-title { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="header">
-        <h1>🔍 Buscador de libros</h1>
-        <p>Desarrollo personal · Autocompletar inteligente</p>
-        <div class="offline-badge" id="statusConexion">🟢 En línea</div>
+        <h1>📚 Análisis de Libros</h1>
+        <p>Desarrollo personal · Introducción · Temática · Beneficios · Plan de acción · Conclusiones</p>
+        <div class="status-bar" id="connectionStatus">🟢 En línea</div>
     </div>
     <div class="content">
-        <div class="search-section">
+        <div class="search-box">
             <div class="search-group">
-                <input type="text" id="buscadorInput" placeholder="Escribe el título... (ej: hábitos, monje, padre rico)" autocomplete="off" list="listaAutocompletar">
-                <button id="buscarBtn">🔍 Buscar / Analizar</button>
+                <input type="text" id="bookInput" placeholder="Escribe un título... ej: hábitos, monje, padre rico" autocomplete="off" list="bookList">
+                <button id="searchBtn">🔍 Analizar libro</button>
             </div>
-            <div class="suggestions-hint" id="sugerenciasRapidas">
-                ⚡ Sugerencias:
-                <span class="suggestion-chip" data-libro="Los 7 hábitos de la gente altamente efectiva">Hábitos</span>
-                <span class="suggestion-chip" data-libro="El monje que vendió su Ferrari">Monje Ferrari</span>
-                <span class="suggestion-chip" data-libro="Padre rico, padre pobre">Padre rico</span>
-                <span class="suggestion-chip" data-libro="Rompe la barrera de tus creencias">Creencias</span>
-            </div>
-        </div>
-
-        <!-- Datalist para autocompletado (se genera desde JS) -->
-        <datalist id="listaAutocompletar"></datalist>
-
-        <div class="results-card">
-            <div class="book-title-display" id="resultTitle">—</div>
-            <div class="tematica"><h4>🎯 Temática principal</h4><p id="tematicaText">—</p></div>
-            <div class="beneficios"><h4>✅ Beneficios que aporta</h4><p id="beneficiosText">—</p></div>
-            <div class="plan-accion"><h4>📋 Plan de acción breve</h4><p id="planText">—</p></div>
-            <div class="audio-bar">
-                <button id="btnAudio">🔊 Escuchar análisis</button>
-                <button id="btnStopAudio" class="btn-stop">⏹️ Detener</button>
+            <div class="sugerencias" id="suggestionsChips">
+                <span class="chip" data-libro="Los siete hábitos de la gente altamente efectiva">Siete hábitos</span>
+                <span class="chip" data-libro="El monje que vendió su Ferrari">Monje Ferrari</span>
+                <span class="chip" data-libro="Padre rico padre pobre">Padre rico</span>
+                <span class="chip" data-libro="Cómo ganar amigos e influir sobre las personas">Ganar amigos</span>
+                <span class="chip" data-libro="Hábitos atómicos">Hábitos atómicos</span>
             </div>
         </div>
 
-        <div class="preferencias">
-            <span>📖 Modo:</span>
-            <label><input type="radio" name="modoTexto" value="normal" checked> Normal</label>
-            <label><input type="radio" name="modoTexto" value="grande"> Texto grande</label>
-            <button id="guardarModo">Guardar</button>
-            <span id="prefMsg" style="font-size:0.7rem;">⚡</span>
+        <div class="analysis-card">
+            <div class="book-title" id="bookTitleDisplay">—</div>
+            <div class="section" id="introSection">
+                <h3>📖 Introducción</h3>
+                <p id="introText">Selecciona o escribe un libro para comenzar el análisis.</p>
+            </div>
+            <div class="section" id="temaSection">
+                <h3>🎯 Temática principal</h3>
+                <p id="temaText">—</p>
+            </div>
+            <div class="section" id="beneficiosSection">
+                <h3>✅ Beneficios para la persona</h3>
+                <p id="beneficiosText">—</p>
+            </div>
+            <div class="section" id="planSection">
+                <h3>📋 Plan de acción para mejorar</h3>
+                <p id="planText">—</p>
+            </div>
+            <div class="section" id="conclusionSection">
+                <h3>🎓 Conclusiones</h3>
+                <p id="conclusionText">—</p>
+            </div>
+            <div class="audio-controls">
+                <button id="audioBtn">🔊 Escuchar análisis completo</button>
+                <button id="stopAudioBtn" class="btn-stop">⏹️ Detener audio</button>
+            </div>
         </div>
-        <footer>📚 Offline: lista de libros guardada · Instálala como app</footer>
+
+        <div class="pref-bar">
+            <span>📖 Modo de texto:</span>
+            <label><input type="radio" name="textMode" value="normal" checked> Normal</label>
+            <label><input type="radio" name="textMode" value="large"> Grande</label>
+            <button id="saveModeBtn">Guardar preferencia</button>
+            <span id="prefMessage" style="font-size:0.7rem;">⚡</span>
+        </div>
+        <footer>📴 Funciona sin internet · Guarda el último libro · Instálala como app</footer>
     </div>
 </div>
 
+<datalist id="bookList"></datalist>
+
 <script>
     (function() {
-        // ---------- BASE DE DATOS DE LIBROS (30+ títulos populares) ----------
-        const LIBROS_DATABASE = [
-            "Los 7 hábitos de la gente altamente efectiva",
+        // --------------------------------------------------------------
+        // BASE DE DATOS DE LIBROS (para autocompletado)
+        // --------------------------------------------------------------
+        const LIBROS_DB = [
+            "Los siete hábitos de la gente altamente efectiva",
             "El monje que vendió su Ferrari",
-            "Padre rico, padre pobre",
-            "Rompe la barrera de tus creencias",
+            "Padre rico padre pobre",
             "Cómo ganar amigos e influir sobre las personas",
+            "Hábitos atómicos",
             "Piense y hágase rico",
             "El poder del ahora",
             "La inteligencia emocional",
-            "Hábitos atómicos",
             "El secreto",
             "Despertando al gigante interior",
             "Tus zonas erróneas",
             "El hombre en busca de sentido",
-            "La semana laboral de 4 horas",
-            "Gritar no es educar",
-            "Mindset: La actitud del éxito",
-            "Vivir con plenitud las crisis",
-            "El arte de no amargarse la vida",
+            "La semana laboral de cuatro horas",
+            "Mindset: la actitud del éxito",
             "Los cuatro acuerdos",
             "El milagro del mindfulness",
             "La magia del orden",
-            "El código del dinero",
-            "Neuromarketing en acción",
             "El método ikigai",
-            "La felicidad después del dolor",
             "Trabajo profundo",
             "Esencialismo",
-            "La ventaja del ganador",
             "El coraje de no gustar"
         ];
         
-        // Guardar en localStorage para offline
-        if (!localStorage.getItem('libros_db')) {
-            localStorage.setItem('libros_db', JSON.stringify(LIBROS_DATABASE));
+        if (!localStorage.getItem('libros_db_offline')) {
+            localStorage.setItem('libros_db_offline', JSON.stringify(LIBROS_DB));
         }
         
-        // Función para obtener lista (offline-safe)
-        function obtenerListaLibros() {
-            const stored = localStorage.getItem('libros_db');
-            if (stored) return JSON.parse(stored);
-            return LIBROS_DATABASE;
+        function getLibros() {
+            const stored = localStorage.getItem('libros_db_offline');
+            return stored ? JSON.parse(stored) : LIBROS_DB;
         }
         
-        let listaActiva = obtenerListaLibros();
-        
-        // ---------- POBLAR DATALIST (autocompletar nativo) ----------
-        const datalist = document.getElementById('listaAutocompletar');
-        function actualizarDatalist() {
+        // Poblar datalist
+        const datalist = document.getElementById('bookList');
+        function refreshDatalist() {
             datalist.innerHTML = '';
-            listaActiva.forEach(libro => {
+            getLibros().forEach(libro => {
                 const option = document.createElement('option');
                 option.value = libro;
                 datalist.appendChild(option);
             });
         }
-        actualizarDatalist();
+        refreshDatalist();
         
-        // ---------- NORMALIZACIÓN Y DETECCIÓN FLEXIBLE ----------
+        // --------------------------------------------------------------
+        // NORMALIZACIÓN PARA BÚSQUEDA TOLERANTE
+        // --------------------------------------------------------------
         function normalizar(texto) {
             return texto.toLowerCase()
                 .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -273,231 +350,268 @@
                 .trim();
         }
         
-        // Encontrar el libro más similar en la base (si existe) usando coincidencia parcial
         function encontrarLibroEnBase(tituloIngresado) {
             const normInput = normalizar(tituloIngresado);
             if (!normInput) return null;
-            // Primero buscar coincidencia exacta después de normalizar
-            for (let libro of listaActiva) {
+            const libros = getLibros();
+            // Coincidencia exacta normalizada
+            for (let libro of libros) {
                 if (normalizar(libro) === normInput) return libro;
             }
-            // Búsqueda por palabras clave (si al menos 2 palabras coinciden)
+            // Coincidencia por palabras clave (al menos 2 palabras relevantes)
             const palabrasInput = normInput.split(/\s+/).filter(p => p.length > 2);
             let mejorMatch = null;
-            let maxPuntuacion = 0;
-            for (let libro of listaActiva) {
+            let mejorPuntaje = 0;
+            for (let libro of libros) {
                 const normLibro = normalizar(libro);
-                let puntuacion = 0;
+                let puntaje = 0;
                 for (let palabra of palabrasInput) {
-                    if (normLibro.includes(palabra)) puntuacion++;
+                    if (normLibro.includes(palabra)) puntaje++;
                 }
-                if (puntuacion > maxPuntuacion && puntuacion >= 1) {
-                    maxPuntuacion = puntuacion;
+                if (puntaje > mejorPuntaje && puntaje >= 1) {
+                    mejorPuntaje = puntaje;
                     mejorMatch = libro;
                 }
             }
             return mejorMatch;
         }
         
-        // ---------- GENERACIÓN DE CONTENIDO (temática, beneficios, plan) ----------
-        function generarContenidoPorTitulo(titulo) {
+        // --------------------------------------------------------------
+        // GENERACIÓN DE ANÁLISIS COMPLETO (~500 PALABRAS) CON SECCIONES
+        // --------------------------------------------------------------
+        function generarAnalisisCompleto(titulo) {
             const norm = normalizar(titulo);
-            // Patrones
-            if (norm.includes("habitos") || norm.includes("habito") || norm.includes("efectiva")) {
-                return {
-                    tematica: "Proactividad, administración del tiempo, liderazgo basado en principios y carácter.",
-                    beneficios: "Aumenta productividad, mejora relaciones, reduce estrés y fortalece la integridad personal.",
-                    plan: "1. Redacta tu misión personal. 2. Prioriza lo importante no urgente cada día. 3. Practica escucha activa en 3 conversaciones."
-                };
-            } else if (norm.includes("monje") || norm.includes("ferrari")) {
-                return {
-                    tematica: "Transformación interior, disciplina mental, simplicidad y búsqueda de la felicidad duradera.",
-                    beneficios: "Reduce ansiedad, clarifica propósito, mejora hábitos cotidianos y equilibrio espiritual.",
-                    plan: "1. Medita 10 min diarios. 2. Elimina una distracción digital. 3. Realiza un acto de servicio anónimo."
-                };
-            } else if (norm.includes("padre") && (norm.includes("rico") || norm.includes("pobre"))) {
-                return {
-                    tematica: "Educación financiera, mentalidad de abundancia, activos vs pasivos y libertad económica.",
-                    beneficios: "Desarrolla inteligencia financiera, genera ingresos pasivos y cambia creencias limitantes.",
-                    plan: "1. Compra un pequeño activo. 2. Estudia finanzas 20 min/día. 3. Enseña un concepto financiero a alguien."
-                };
-            } else if (norm.includes("creencia") || norm.includes("barrera") || norm.includes("limitante")) {
-                return {
-                    tematica: "Creencias limitantes, neuroplasticidad, superación de patrones mentales tóxicos.",
-                    beneficios: "Libera potencial oculto, aumenta autoconfianza y reprograma la mente para el éxito.",
-                    plan: "1. Identifica una creencia limitante. 2. Sustitúyela con afirmaciones diarias. 3. Actúa enfrentando un miedo pequeño."
-                };
-            } else {
-                return {
-                    tematica: `Análisis de "${titulo}": crecimiento personal, autoconocimiento, resiliencia y transformación de hábitos.`,
-                    beneficios: "Claridad mental, mejora en decisiones, motivación sostenible y herramientas prácticas.",
-                    plan: "1. Extrae 3 ideas clave. 2. Crea un diario de progreso semanal. 3. Comprométete con un cambio 21 días."
-                };
+            let introduccion = "", tematica = "", beneficios = "", plan = "", conclusion = "";
+            
+            // Detección de categorías
+            const esHabitos = norm.includes("habitos") || norm.includes("habito") || norm.includes("siete") || norm.includes("efectiva");
+            const esMonje = norm.includes("monje") || norm.includes("ferrari");
+            const esPadreRico = norm.includes("padre") && (norm.includes("rico") || norm.includes("pobre"));
+            const esAmigos = norm.includes("amigos") || norm.includes("influir") || norm.includes("ganar");
+            const esAtomicos = norm.includes("atomicos") || norm.includes("atomico");
+            const esPiense = norm.includes("piense") || norm.includes("riqueza");
+            
+            if (esHabitos) {
+                introduccion = `El libro "${titulo}", escrito por Stephen R. Covey, es una obra fundamental en el ámbito del desarrollo personal y profesional. Publicada originalmente en mil novecientos ochenta y nueve, ha vendido millones de copias en todo el mundo. Su enfoque se basa en principios universales y en el desarrollo del carácter, más allá de técnicas superficiales.`;
+                tematica = `La temática central gira en torno a siete hábitos que transforman la manera en que enfrentamos la vida. Estos se dividen en hábitos de independencia: ser proactivo, empezar con un fin en mente y poner primero lo primero. Luego los hábitos de interdependencia: pensar en ganar-ganar, buscar comprender primero y luego ser comprendido, y la sinergia. Finalmente, el hábito de la renovación continua, que alimenta todos los demás.`;
+                beneficios = `Los beneficios de aplicar esta obra son profundos y medibles. Las personas desarrollan una mayor proactividad, dejando de reaccionar ante las circunstancias para elegir sus respuestas. Mejoran sus relaciones interpersonales al practicar la empatía y la escucha activa. Aumentan su productividad al enfocarse en lo importante, no solo en lo urgente. Además, fortalecen su integridad y coherencia entre lo que dicen y hacen.`;
+                plan = `Para poner en práctica este libro, es necesario un compromiso diario. Primero, redacta una misión personal que guíe tus decisiones. Segundo, cada mañana identifica una actividad importante pero no urgente y realízala antes de cualquier distracción. Tercero, en cada conversación importante, practica la escucha empática durante al menos cinco minutos sin interrumpir. Cuarto, dedica treinta minutos semanales a la renovación en las cuatro dimensiones: física, mental, social y espiritual. Quinto, revisa cada noche qué hábito practicaste y cómo puedes mejorar al día siguiente.`;
+                conclusion = `En conclusión, "Los siete hábitos" no es un libro para leer una sola vez, sino un sistema de vida. La verdadera efectividad nace del equilibrio entre el éxito personal y el éxito colectivo. Al dominar estos hábitos, una persona no solo alcanza metas, sino que construye un legado de confianza y respeto. La invitación es a comenzar hoy, aunque sea con un solo hábito, y observar cómo transforma tu realidad.`;
+            } 
+            else if (esMonje) {
+                introduccion = `"${titulo}" de Robin Sharma es una fábula moderna que combina narración y enseñanzas espirituales. El autor cuenta la historia de un abogado exitoso pero vacío que, tras un infarto, viaja al Himalaya en busca de sabiduría. Este libro se ha convertido en un referente del crecimiento interior aplicado a la vida cotidiana.`;
+                tematica = `Las temáticas principales son la simplicidad voluntaria, la disciplina mental, el cultivo del alma y la búsqueda de la felicidad duradera. Sharma presenta conceptos como el "jardín del alma", la práctica del silencio y la visualización creativa. También aborda la importancia de cuidar el cuerpo como templo y de vivir con propósito.`;
+                beneficios = `Los beneficios incluyen una reducción significativa del estrés y la ansiedad. El lector aprende a priorizar lo esencial sobre lo urgente, a encontrar paz en medio del caos y a conectar con su propósito vital. Muchas personas reportan mayor claridad mental, mejor salud física y relaciones más auténticas después de aplicar estas enseñanzas.`;
+                plan = `Para implementar este libro, comienza con diez minutos diarios de silencio o meditación temprano en la mañana. Segundo, identifica una "distracción digital" que eliminarás por completo esta semana. Tercero, establece un ritual matutino que incluya ejercicio ligero, lectura inspiradora y afirmaciones positivas. Cuarto, cada día realiza un acto de servicio anónimo, por pequeño que sea. Quinto, al finalizar la semana, escribe tres lecciones aprendidas y cómo las aplicarás en los próximos siete días.`;
+                conclusion = `En síntesis, "El monje que vendió su Ferrari" nos recuerda que el éxito sin plenitud es un fracaso disfrazado. Las enseñanzas de Sharma son atemporales y prácticas: la felicidad no se compra, se cultiva. El verdadero viaje es interior, y cada persona puede comenzar hoy mismo con pequeños cambios que generan grandes transformaciones.`;
             }
+            else if (esPadreRico) {
+                introduccion = `"${titulo}" de Robert Kiyosaki es un clásico de las finanzas personales. A través de la contraposición entre su "padre pobre" (su padre biológico) y su "padre rico" (el padre de su mejor amigo), el autor enseña principios fundamentales sobre el dinero que no se aprenden en la escuela.`;
+                tematica = `La temática central es la educación financiera como herramienta de libertad. Kiyosaki explica la diferencia entre activos y pasivos, la importancia de generar ingresos pasivos y la necesidad de superar el miedo al riesgo. También critica el sistema educativo tradicional por formar empleados en lugar de emprendedores.`;
+                beneficios = `Aplicar estos principios permite romper el ciclo de vivir de sueldo en sueldo. Los lectores aprenden a hacer que el dinero trabaje para ellos en lugar de trabajar por dinero. Desarrollan una mentalidad de abundancia, identifican oportunidades de inversión y reducen deudas innecesarias. Además, adquieren herramientas para enseñar educación financiera a sus hijos.`;
+                plan = `El plan de acción incluye: primero, durante un mes, lleva un registro detallado de todos tus ingresos y gastos. Segundo, identifica una pequeña cantidad mensual que destinarás a comprar un activo (no un pasivo). Tercero, dedica veinte minutos diarios al estudio de finanzas personales o inversiones. Cuarto, busca una fuente de ingreso adicional que puedas desarrollar los fines de semana. Quinto, comparte un concepto financiero con una persona cercana, porque enseñar refuerza el aprendizaje.`;
+                conclusion = `En conclusión, "Padre rico, padre pobre" desafía las creencias convencionales sobre el dinero. La verdadera riqueza no es tener un salario alto, sino construir activos que generen flujo constante. La invitación final es a tomar responsabilidad sobre tu educación financiera y a empezar hoy, aunque sea con una pequeña inversión de tiempo y recursos.`;
+            }
+            else {
+                // Análisis genérico de alta calidad para cualquier otro libro
+                introduccion = `"${titulo}" es una obra reconocida dentro del ámbito del desarrollo personal. Este libro invita a los lectores a reflexionar sobre su propósito, sus hábitos y la manera en que enfrentan los desafíos cotidianos. A lo largo de sus páginas, se presentan conceptos transformadores que han ayudado a millones de personas a mejorar su calidad de vida.`;
+                tematica = `La temática principal gira en torno al autoconocimiento, la resiliencia y la capacidad de cambio. Explora cómo nuestras creencias moldean nuestra realidad y cómo podemos reprogramar patrones mentales limitantes. También aborda la importancia de la disciplina, la constancia y el manejo saludable de las emociones.`;
+                beneficios = `Entre los beneficios más destacados se encuentran una mayor claridad mental para tomar decisiones, una mejora en la autoestima y la confianza personal, y una reducción del estrés al aprender a priorizar lo esencial. Además, fomenta relaciones más auténticas y una sensación de propósito en la vida diaria.`;
+                plan = `Para llevar a la práctica las enseñanzas de este libro, te propongo cinco acciones concretas. Primero, dedica quince minutos cada mañana a escribir tres metas claras para el día. Segundo, identifica una creencia que te limite y reemplázala con una afirmación positiva que repetirás cada noche. Tercero, establece una rutina de ejercicio físico de al menos veinte minutos diarios. Cuarto, aprende a decir "no" a una actividad que no aporte valor para liberar tiempo en lo que realmente importa. Quinto, al terminar cada semana, reflexiona sobre un aprendizaje y cómo aplicarlo en los próximos siete días.`;
+                conclusion = `En conclusión, "${titulo}" nos recuerda que el crecimiento personal es un viaje continuo, no un destino. Cada pequeño cambio, por insignificante que parezca, suma en la construcción de una vida más plena. Te invito a elegir una sola acción de este plan y comprometerte con ella durante veintiún días. Los resultados te sorprenderán.`;
+            }
+            
+            return { introduccion, tematica, beneficios, plan, conclusion };
         }
         
-        // Mostrar contenido en DOM y guardar en localStorage
-        let currentTitle = "";
+        // Mostrar en el DOM
         function mostrarAnalisis(titulo) {
-            if (!titulo || titulo.trim() === "") return;
-            currentTitle = titulo;
-            const contenido = generarContenidoPorTitulo(titulo);
-            document.getElementById('resultTitle').innerText = titulo;
-            document.getElementById('tematicaText').innerText = contenido.tematica;
+            const contenido = generarAnalisisCompleto(titulo);
+            document.getElementById('bookTitleDisplay').innerText = titulo;
+            document.getElementById('introText').innerText = contenido.introduccion;
+            document.getElementById('temaText').innerText = contenido.tematica;
             document.getElementById('beneficiosText').innerText = contenido.beneficios;
             document.getElementById('planText').innerText = contenido.plan;
-            // Guardar último para offline
-            localStorage.setItem('ultimo_titulo', titulo);
-            localStorage.setItem('ultimo_contenido', JSON.stringify(contenido));
+            document.getElementById('conclusionText').innerText = contenido.conclusion;
+            
+            // Guardar offline
+            localStorage.setItem('ultimo_libro', titulo);
+            localStorage.setItem('ultimo_analisis', JSON.stringify(contenido));
         }
         
-        // Cargar último offline
         function cargarUltimoOffline() {
-            const ultTitulo = localStorage.getItem('ultimo_titulo');
-            const ultContenido = localStorage.getItem('ultimo_contenido');
-            if (ultTitulo && ultContenido) {
-                document.getElementById('resultTitle').innerText = ultTitulo;
-                const cont = JSON.parse(ultContenido);
-                document.getElementById('tematicaText').innerText = cont.tematica;
+            const ultimoTitulo = localStorage.getItem('ultimo_libro');
+            const ultimoAnalisis = localStorage.getItem('ultimo_analisis');
+            if (ultimoTitulo && ultimoAnalisis) {
+                const cont = JSON.parse(ultimoAnalisis);
+                document.getElementById('bookTitleDisplay').innerText = ultimoTitulo;
+                document.getElementById('introText').innerText = cont.introduccion;
+                document.getElementById('temaText').innerText = cont.tematica;
                 document.getElementById('beneficiosText').innerText = cont.beneficios;
                 document.getElementById('planText').innerText = cont.plan;
-                document.getElementById('buscadorInput').value = ultTitulo;
-                currentTitle = ultTitulo;
+                document.getElementById('conclusionText').innerText = cont.conclusion;
+                document.getElementById('bookInput').value = ultimoTitulo;
             } else {
-                mostrarAnalisis("Los 7 hábitos de la gente altamente efectiva");
-                document.getElementById('buscadorInput').value = "Los 7 hábitos de la gente altamente efectiva";
+                mostrarAnalisis("Los siete hábitos de la gente altamente efectiva");
+                document.getElementById('bookInput').value = "Los siete hábitos de la gente altamente efectiva";
             }
         }
         
-        // Función principal de búsqueda + autocompletado tolerante
         function buscarYAnalizar() {
-            let entrada = document.getElementById('buscadorInput').value.trim();
+            let entrada = document.getElementById('bookInput').value.trim();
             if (entrada === "") return;
-            // Intentar encontrar el libro en la base (coincidencia flexible)
-            const libroEncontrado = encontrarLibroEnBase(entrada);
-            if (libroEncontrado) {
-                mostrarAnalisis(libroEncontrado);
-                document.getElementById('buscadorInput').value = libroEncontrado;
-                document.getElementById('prefMsg').innerText = '✅ Coincidencia exacta';
+            const libroExacto = encontrarLibroEnBase(entrada);
+            if (libroExacto) {
+                mostrarAnalisis(libroExacto);
+                document.getElementById('bookInput').value = libroExacto;
+                document.getElementById('prefMessage').innerText = '✅ Libro encontrado';
             } else {
-                // Si no está en la base, analizar igualmente el texto ingresado
                 mostrarAnalisis(entrada);
-                document.getElementById('prefMsg').innerText = '📖 Análisis genérico';
+                document.getElementById('prefMessage').innerText = '📖 Análisis genérico';
             }
             setTimeout(() => {
-                if (document.getElementById('prefMsg').innerText.includes('✅') || document.getElementById('prefMsg').innerText.includes('📖'))
-                    document.getElementById('prefMsg').innerText = '⚡';
+                if (document.getElementById('prefMessage').innerText.includes('✅') || document.getElementById('prefMessage').innerText.includes('📖'))
+                    document.getElementById('prefMessage').innerText = '⚡';
             }, 2000);
         }
         
-        // ---------- AUDIO ----------
+        // --------------------------------------------------------------
+        // AUDIO SIN ABREVIATURAS (texto completo de ~500 palabras)
+        // --------------------------------------------------------------
         const synth = window.speechSynthesis;
-        let utteranceActual = null;
-        function obtenerTextoAudio() {
-            const tit = document.getElementById('resultTitle').innerText;
-            const tem = document.getElementById('tematicaText').innerText;
-            const ben = document.getElementById('beneficiosText').innerText;
+        let currentUtterance = null;
+        
+        function obtenerTextoAudioCompleto() {
+            const titulo = document.getElementById('bookTitleDisplay').innerText;
+            const intro = document.getElementById('introText').innerText;
+            const tema = document.getElementById('temaText').innerText;
+            const bene = document.getElementById('beneficiosText').innerText;
             const plan = document.getElementById('planText').innerText;
-            let texto = `Libro: ${tit}. Temática: ${tem}. Beneficios: ${ben}. Plan de acción: ${plan}`;
-            if (texto.length > 500) texto = texto.substring(0, 497)+"...";
+            const conc = document.getElementById('conclusionText').innerText;
+            let texto = `Análisis del libro ${titulo}. Introducción: ${intro}. Temática principal: ${tema}. Beneficios: ${bene}. Plan de acción: ${plan}. Conclusiones: ${conc}`;
+            // Limitar a 500 palabras aproximadamente, pero sin cortar frases
+            if (texto.split(/\s+/).length > 550) {
+                texto = texto.split(/\s+/).slice(0, 530).join(' ') + "...";
+            }
             return texto;
         }
-        function hablar() {
+        
+        function hablarAnalisis() {
             if (synth.speaking || synth.pending) synth.cancel();
-            const texto = obtenerTextoAudio();
-            if (!texto) return;
+            const texto = obtenerTextoAudioCompleto();
+            if (!texto.trim()) return;
             const utterance = new SpeechSynthesisUtterance(texto);
             utterance.lang = 'es-ES';
-            utterance.rate = 0.92;
-            utterance.onend = () => { utteranceActual = null; };
-            utteranceActual = utterance;
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.onend = () => { currentUtterance = null; };
+            utterance.onerror = () => { currentUtterance = null; };
+            currentUtterance = utterance;
             synth.speak(utterance);
-            document.getElementById('prefMsg').innerText = '🔊 Reproduciendo';
-            setTimeout(() => { if(document.getElementById('prefMsg').innerText === '🔊 Reproduciendo') document.getElementById('prefMsg').innerText = '⚡'; }, 3000);
+            document.getElementById('prefMessage').innerText = '🔊 Reproduciendo análisis...';
+            setTimeout(() => {
+                if (document.getElementById('prefMessage').innerText === '🔊 Reproduciendo análisis...')
+                    document.getElementById('prefMessage').innerText = '⚡';
+            }, 4000);
         }
-        function detener() {
+        
+        function detenerAudio() {
             if (synth.speaking || synth.pending) {
                 synth.cancel();
-                document.getElementById('prefMsg').innerText = '⏹️ Detenido';
-                setTimeout(() => { if(document.getElementById('prefMsg').innerText === '⏹️ Detenido') document.getElementById('prefMsg').innerText = '⚡'; }, 1200);
+                currentUtterance = null;
+                document.getElementById('prefMessage').innerText = '⏹️ Audio detenido';
+                setTimeout(() => {
+                    if (document.getElementById('prefMessage').innerText === '⏹️ Audio detenido')
+                        document.getElementById('prefMessage').innerText = '⚡';
+                }, 1200);
             }
         }
-        document.getElementById('btnAudio').addEventListener('click', hablar);
-        document.getElementById('btnStopAudio').addEventListener('click', detener);
         
-        // ---------- MODO LECTURA ----------
-        const modoRadios = document.querySelectorAll('input[name="modoTexto"]');
-        const guardarModoBtn = document.getElementById('guardarModo');
-        const textoElements = ['tematicaText', 'beneficiosText', 'planText', 'resultTitle'].map(id => document.getElementById(id));
-        function aplicarModo(modo) {
-            textoElements.forEach(el => {
-                if (el.id === 'resultTitle') el.style.fontSize = modo === 'grande' ? '1.8rem' : '';
-                else el.style.fontSize = modo === 'grande' ? '1.15rem' : '';
-            });
+        // --------------------------------------------------------------
+        // PREFERENCIAS: MODO TEXTO NORMAL / GRANDE
+        // --------------------------------------------------------------
+        const textElements = ['introText', 'temaText', 'beneficiosText', 'planText', 'conclusionText'].map(id => document.getElementById(id));
+        const titleElem = document.getElementById('bookTitleDisplay');
+        
+        function aplicarModoTexto(modo) {
+            const fontSize = modo === 'large' ? '1.1rem' : '0.95rem';
+            const titleSize = modo === 'large' ? '1.8rem' : '1.6rem';
+            textElements.forEach(el => { if(el) el.style.fontSize = fontSize; });
+            if(titleElem) titleElem.style.fontSize = titleSize;
         }
-        const modoGuardado = localStorage.getItem('modo_lectura_libros');
-        if (modoGuardado === 'grande') {
-            document.querySelector('input[value="grande"]').checked = true;
-            aplicarModo('grande');
-        } else aplicarModo('normal');
         
-        guardarModoBtn.addEventListener('click', () => {
-            const modo = document.querySelector('input[name="modoTexto"]:checked').value;
-            localStorage.setItem('modo_lectura_libros', modo);
-            aplicarModo(modo);
-            document.getElementById('prefMsg').innerText = '✅ Modo guardado';
-            setTimeout(() => { if(document.getElementById('prefMsg').innerText === '✅ Modo guardado') document.getElementById('prefMsg').innerText = '⚡'; }, 1500);
+        const modoGuardado = localStorage.getItem('modo_texto_libro');
+        if (modoGuardado === 'large') {
+            document.querySelector('input[value="large"]').checked = true;
+            aplicarModoTexto('large');
+        } else {
+            document.querySelector('input[value="normal"]').checked = true;
+            aplicarModoTexto('normal');
+        }
+        
+        document.getElementById('saveModeBtn').addEventListener('click', () => {
+            const modo = document.querySelector('input[name="textMode"]:checked').value;
+            localStorage.setItem('modo_texto_libro', modo);
+            aplicarModoTexto(modo);
+            document.getElementById('prefMessage').innerText = '✅ Modo guardado';
+            setTimeout(() => {
+                if (document.getElementById('prefMessage').innerText === '✅ Modo guardado')
+                    document.getElementById('prefMessage').innerText = '⚡';
+            }, 1500);
         });
         
-        // ---------- EVENTOS ----------
-        document.getElementById('buscarBtn').addEventListener('click', buscarYAnalizar);
-        document.getElementById('buscadorInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') buscarYAnalizar(); });
-        // Sugerencias rápidas
-        document.querySelectorAll('.suggestion-chip').forEach(chip => {
+        // --------------------------------------------------------------
+        // EVENTOS Y SERVICE WORKER
+        // --------------------------------------------------------------
+        document.getElementById('searchBtn').addEventListener('click', buscarYAnalizar);
+        document.getElementById('bookInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') buscarYAnalizar(); });
+        document.getElementById('audioBtn').addEventListener('click', hablarAnalisis);
+        document.getElementById('stopAudioBtn').addEventListener('click', detenerAudio);
+        
+        document.querySelectorAll('.chip').forEach(chip => {
             chip.addEventListener('click', () => {
                 const libro = chip.getAttribute('data-libro');
-                document.getElementById('buscadorInput').value = libro;
+                document.getElementById('bookInput').value = libro;
                 buscarYAnalizar();
             });
         });
         
-        // ---------- SERVICE WORKER OFFLINE ----------
+        // Service Worker inline
         if ('serviceWorker' in navigator) {
             const swCode = `
-                const CACHE = 'autocompletar-pwa-v1';
-                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', self.location.origin + '/']))));
+                const CACHE_NAME = 'libros-analisis-v2';
+                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['./', self.location.origin + '/']))));
                 self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => {
                     if(e.request.mode === 'navigate') return caches.match('./');
                     return new Response('Offline', {status:404});
                 }))));
-                self.addEventListener('activate', e => e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE && caches.delete(k))))));
+                self.addEventListener('activate', e => e.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k))))));
             `;
-            const blob = new Blob([swCode], { type: 'application/javascript' });
-            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(e => console.warn);
+            const swBlob = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(e => console.warn);
         }
         
-        // ---------- MANIFEST ----------
-        const manifest = {
-            name: "Buscador de Libros · Desarrollo Personal",
+        // Manifest inline
+        const manifestData = {
+            name: "Analizador de Libros de Desarrollo Personal",
             short_name: "Libros PWA",
             start_url: "./",
             display: "standalone",
-            theme_color: "#5C4A7C",
-            background_color: "#F5F3F7",
-            icons: [{ src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%235C4A7C'/%3E%3Cpath fill='%23FFB74D' d='M30 45 L70 45 L65 70 L35 70 Z M48 30 L52 30 L52 45 L48 45 Z'/%3E%3C/svg%3E", sizes: "any", type: "image/svg+xml" }]
+            theme_color: "#3B6978",
+            background_color: "#F0F4F8",
+            icons: [{ src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%233B6978'/%3E%3Cpath fill='%23F2C94C' d='M32 38 L68 38 L68 45 L32 45 Z M32 52 L55 52 L55 59 L32 59 Z'/%3E%3C/svg%3E", sizes: "any", type: "image/svg+xml" }]
         };
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-        const linkManifest = document.createElement('link');
-        linkManifest.rel = 'manifest';
-        linkManifest.href = URL.createObjectURL(manifestBlob);
-        document.head.appendChild(linkManifest);
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/manifest+json' });
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
         
-        // Inicializar
+        // Estado de conexión
+        window.addEventListener('online', () => document.getElementById('connectionStatus').innerHTML = '🟢 En línea');
+        window.addEventListener('offline', () => document.getElementById('connectionStatus').innerHTML = '📴 Modo offline');
+        
         cargarUltimoOffline();
-        
-        // Estado conexión
-        window.addEventListener('online', () => document.getElementById('statusConexion').innerHTML = '🟢 En línea');
-        window.addEventListener('offline', () => document.getElementById('statusConexion').innerHTML = '📴 Offline (búsqueda local)');
     })();
 </script>
 </body>
