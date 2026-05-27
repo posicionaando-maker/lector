@@ -17,7 +17,7 @@
 
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-            background: #F1F9FC;  /* azul muy suave */
+            background: #F1F9FC;
             color: #1A3E4C;
             line-height: 1.5;
             padding: 1.5rem;
@@ -35,7 +35,6 @@
             border-radius: 40px;
             box-shadow: 0 20px 35px rgba(0, 122, 138, 0.1);
             overflow: hidden;
-            transition: all 0.2s;
         }
 
         .header {
@@ -62,7 +61,6 @@
             padding: 2rem 1.5rem;
         }
 
-        /* Tarjeta del libro */
         .book-card {
             background: #FEFDF6;
             border-radius: 28px;
@@ -101,14 +99,14 @@
             text-align: justify;
         }
 
-        .enseñanzas-list {
+        .ensenanzas-list {
             background: #F5FBFD;
             padding: 1rem 1.2rem;
             border-radius: 20px;
             margin: 1rem 0 0.5rem;
         }
 
-        .enseñanzas-list h4 {
+        .ensenanzas-list h4 {
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -119,33 +117,41 @@
             gap: 0.4rem;
         }
 
-        .enseñanzas-list ul {
+        .ensenanzas-list ul {
             padding-left: 1.3rem;
             color: #2C5A63;
         }
 
-        .enseñanzas-list li {
+        .ensenanzas-list li {
             margin: 0.5rem 0;
             font-size: 0.92rem;
         }
 
-        /* Audio */
         .audio-section {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
             border-top: 1px solid #D4E6EB;
             padding-top: 1.2rem;
             margin-top: 0.3rem;
+        }
+
+        .audio-label {
+            background: #E9F0E6;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            color: #005F6B;
+            font-weight: 500;
         }
 
         button {
             background: #007A8A;
             border: none;
             color: white;
-            padding: 0.55rem 1.3rem;
+            padding: 0.6rem 1.4rem;
             border-radius: 60px;
             font-size: 0.85rem;
             font-weight: 500;
@@ -162,15 +168,13 @@
             background: #005F6B;
         }
 
-        .btn-secundario {
-            background: #FFB74D;
-            color: #1E3A3F;
+        .btn-detener {
+            background: #D95B5B;
         }
-        .btn-secundario:hover {
-            background: #FFA01E;
+        .btn-detener:hover {
+            background: #C13B3B;
         }
 
-        /* Preferencias */
         .preferencias-card {
             background: #F0F8FA;
             border-radius: 24px;
@@ -207,6 +211,10 @@
             cursor: pointer;
         }
 
+        input[type="radio"] {
+            accent-color: #007A8A;
+        }
+
         .estado-guardado {
             font-size: 0.8rem;
             background: #DCEFF3;
@@ -227,6 +235,7 @@
             body { padding: 0.8rem; }
             .content { padding: 1.2rem; }
             .book-title-variable { font-size: 1.4rem; }
+            button { padding: 0.5rem 1.1rem; }
         }
     </style>
 </head>
@@ -237,14 +246,14 @@
         <p>Descubre, aprende y transforma tu vida</p>
     </div>
     <div class="content">
-        <div class="book-card" id="libroCard">
+        <div class="book-card">
             <!-- Título dinámico: fácil de editar (ver variable en JS) -->
             <div class="book-title-variable" id="tituloLibroDinamico">Los 7 hábitos de la gente altamente efectiva</div>
             <span class="tematica-badge">🎯 Temática principal</span>
             <div class="resumen-texto" id="resumenTextoLibro">
-                Liderazgo personal, proactividad y enfoque en valores. Beneficios: aumentar la efectividad, fortalecer relaciones y lograr metas con integridad. Enseñanzas clave: sé proactivo, empieza con un fin en mente, primero lo primero, piensa ganar/ganar, busca entender antes de ser entendido, sinergia y afila la sierra.
+                Liderazgo personal, proactividad y enfoque en valores. Beneficios: aumentar la efectividad, fortalecer relaciones y lograr metas con integridad.
             </div>
-            <div class="enseñanzas-list" id="listaEnsenanzas">
+            <div class="ensenanzas-list" id="listaEnsenanzas">
                 <h4>✨ Enseñanzas que debemos dominar</h4>
                 <ul>
                     <li><strong>⚡ Proactividad:</strong> Tú decides cómo responder ante cualquier circunstancia.</li>
@@ -254,11 +263,9 @@
                 </ul>
             </div>
             <div class="audio-section">
-                <span class="estado-guardado" style="background:#E9F0E6;">🎧 Audio del resumen</span>
-                <div>
-                    <button id="btnAudioLibro">🔊 Escuchar enseñanzas</button>
-                    <button id="btnStopAudioLibro" class="btn-secundario">⏹️ Detener</button>
-                </div>
+                <span class="audio-label">🎧 Audio del resumen y enseñanzas</span>
+                <button id="btnEscucharAudio">🔊 Escuchar enseñanzas</button>
+                <button id="btnDetenerAudio" class="btn-detener">⏹️ Detener</button>
             </div>
         </div>
 
@@ -289,28 +296,30 @@
 <script>
     (function() {
         // ==============================================================
-        // 1. CONFIGURACIÓN INICIAL: LIBRO (CAMBIA AQUÍ EL TÍTULO Y TEXTO)
+        // 1. CONFIGURACIÓN INICIAL DEL LIBRO (FÁCILMENTE EDITABLE)
         // ==============================================================
-        // 🔁 PERSONALIZA FÁCILMENTE ESTOS DATOS:
-        const NOMBRE_LIBRO = "Los 7 hábitos de la gente altamente efectiva";
-        const RESUMEN_LIBRO = "Temática: liderazgo proactivo, principios universales y carácter. Beneficios: mayor productividad, relaciones sólidas y paz interior. Enseñanzas: sé proactivo, empieza con un fin en mente, prioriza lo importante, busca el ganar-ganar, entiende primero, sinergia y renovación continua.";
+        const NOMBRE_LIBRO = "Habitos atomicos";
+        const RESUMEN_LIBRO = "Temática: liderazgo proactivo, principios universales y carácter. Beneficios: mayor productividad, relaciones sólidas y paz interior. Enseñanzas principales: sé proactivo, empieza con un fin en mente, prioriza lo importante, busca el ganar-ganar, entiende primero, sinergia y renovación continua.";
         
-        // Lista de enseñanzas (se pueden modificar)
         const ENSENANZAS = [
-            "⚡ Proactividad: Elige tu respuesta ante cualquier situación.",
-            "🎯 Misión personal: Define tu legado antes de actuar.",
-            "🤝 Empatía activa: Escucha profundamente para conectar.",
-            "🔄 Renovación: Equilibrio físico, mental, social y espiritual."
+            "⚡ Proactividad: Elige tu respuesta ante cualquier situación, no solo reacciones.",
+            "🎯 Misión personal: Define tu legado y propósito antes de actuar cada día.",
+            "🤝 Empatía activa: Escucha profundamente para conectar y entender a los demás.",
+            "🔄 Renovación constante: Equilibrio físico, mental, social y espiritual para crecer siempre."
         ];
         
-        // ==============================================================
-        // APLICAR DATOS AL DOM
+        // Aplicar datos al DOM
         document.getElementById('tituloLibroDinamico').innerText = NOMBRE_LIBRO;
         document.getElementById('resumenTextoLibro').innerHTML = RESUMEN_LIBRO;
-        // actualizar lista de enseñanzas
         const listaUl = document.querySelector('#listaEnsenanzas ul');
         if (listaUl) {
-            listaUl.innerHTML = ENSENANZAS.map(ens => `<li><strong>${ens.split(':')[0]}:</strong> ${ens.split(':')[1] || ''}</li>`).join('');
+            listaUl.innerHTML = ENSENANZAS.map(ens => {
+                const partes = ens.split(':');
+                if (partes.length >= 2) {
+                    return `<li><strong>${partes[0]}:</strong> ${partes.slice(1).join(':')}</li>`;
+                }
+                return `<li>${ens}</li>`;
+            }).join('');
         }
         
         // ==============================================================
@@ -325,15 +334,16 @@
         const mensajeSpan = document.getElementById('mensajeLocal');
         const visitasSpan = document.getElementById('visitasContador');
         
-        // Contador
+        // Contador de visitas
         let visitas = 1;
         const visitasPrev = localStorage.getItem(STORAGE_VISITS);
         if (visitasPrev !== null) visitas = parseInt(visitasPrev, 10) + 1;
         localStorage.setItem(STORAGE_VISITS, visitas);
         if (visitas === 1) visitasSpan.innerText = 'Primera visita ✨';
-        else visitasSpan.innerText = `${visitas} visitas · sigue aprendiendo`;
+        else if (visitas < 5) visitasSpan.innerText = `${visitas} visitas · sigue aprendiendo`;
+        else visitasSpan.innerText = `📖 ${visitas} visitas · crecimiento constante`;
         
-        // Aplicar estilo guardado
+        // Aplicar estilo según modo
         function aplicarEstilo(modo) {
             if (modo === 'resaltado') {
                 resumenDiv.style.fontSize = '1.02rem';
@@ -359,70 +369,99 @@
         } else {
             radioNormal.checked = true;
             aplicarEstilo('normal');
-            estiloActual = 'normal';
         }
         
-        function guardarPreferenciasYEstilo() {
+        function guardarPreferencias() {
             const seleccionado = document.querySelector('input[name="estiloTexto"]:checked').value;
             localStorage.setItem(STORAGE_PREF, seleccionado);
             aplicarEstilo(seleccionado);
             mensajeSpan.innerText = '✅ Preferencias guardadas';
-            setTimeout(() => { if (mensajeSpan.innerText === '✅ Preferencias guardadas') mensajeSpan.innerText = '📌 Listo'; }, 1800);
+            setTimeout(() => {
+                if (mensajeSpan.innerText === '✅ Preferencias guardadas') 
+                    mensajeSpan.innerText = '📌 Listo';
+            }, 2000);
         }
         
-        guardarBtn.addEventListener('click', guardarPreferenciasYEstilo);
+        guardarBtn.addEventListener('click', guardarPreferencias);
         radioNormal.addEventListener('change', () => { if(radioNormal.checked) aplicarEstilo('normal'); });
         radioResaltado.addEventListener('change', () => { if(radioResaltado.checked) aplicarEstilo('resaltado'); });
         
         // ==============================================================
-        // 3. SÍNTESIS DE VOZ (Audio del resumen principal)
+        // 3. SÍNTESIS DE VOZ (Audio separado: ESCUCHAR y DETENER)
         const synth = window.speechSynthesis;
         let utteranceActivo = null;
-        const btnAudio = document.getElementById('btnAudioLibro');
-        const btnStop = document.getElementById('btnStopAudioLibro');
+        const btnEscuchar = document.getElementById('btnEscucharAudio');
+        const btnDetener = document.getElementById('btnDetenerAudio');
         
-        function obtenerTextoVoz() {
-            let texto = `Resumen del libro ${NOMBRE_LIBRO}. ${RESUMEN_LIBRO} Enseñanzas: ${ENSENANZAS.join('. ')}`;
-            if (texto.length > 500) texto = texto.substring(0, 497) + '...';
-            return texto;
+        // Construir el texto completo para audio (resumen + enseñanzas)
+        function obtenerTextoCompletoAudio() {
+            const enseñanzasTexto = ENSENANZAS.map(e => e.replace(/[⚡🎯🤝🔄]/g, '').trim()).join('. ');
+            let textoCompleto = `Resumen del libro ${NOMBRE_LIBRO}. ${RESUMEN_LIBRO} Enseñanzas clave: ${enseñanzasTexto}`;
+            // Limitar a 500 caracteres si es necesario
+            if (textoCompleto.length > 500) {
+                textoCompleto = textoCompleto.substring(0, 497) + '...';
+            }
+            return textoCompleto;
         }
         
-        function hablarLibro() {
-            if (synth.speaking || synth.pending) synth.cancel();
-            const texto = obtenerTextoVoz();
-            if (!texto.trim()) return;
+        function escucharEnsenanzas() {
+            // Detener cualquier audio en curso antes de iniciar uno nuevo
+            if (synth.speaking || synth.pending) {
+                synth.cancel();
+            }
+            const texto = obtenerTextoCompletoAudio();
+            if (!texto.trim()) {
+                mensajeSpan.innerText = '⚠️ No hay texto para leer';
+                return;
+            }
             const utterance = new SpeechSynthesisUtterance(texto);
             utterance.lang = 'es-ES';
             utterance.rate = 0.92;
             utterance.pitch = 1.0;
-            utterance.onend = () => { utteranceActivo = null; mensajeSpan.innerText = '📌 Listo'; };
-            utterance.onerror = () => { utteranceActivo = null; mensajeSpan.innerText = '⚠️ Error voz'; };
+            utterance.volume = 1;
+            utterance.onend = () => {
+                utteranceActivo = null;
+                mensajeSpan.innerText = '📌 Audio finalizado';
+                setTimeout(() => {
+                    if (mensajeSpan.innerText === '📌 Audio finalizado') 
+                        mensajeSpan.innerText = '📌 Listo';
+                }, 1500);
+            };
+            utterance.onerror = () => {
+                utteranceActivo = null;
+                mensajeSpan.innerText = '⚠️ Error en audio';
+            };
             utteranceActivo = utterance;
             synth.speak(utterance);
-            mensajeSpan.innerText = '🔊 Reproduciendo audio...';
-            setTimeout(() => { if (mensajeSpan.innerText === '🔊 Reproduciendo audio...') mensajeSpan.innerText = '📌 Listo'; }, 3500);
+            mensajeSpan.innerText = '🔊 Reproduciendo enseñanzas...';
         }
         
-        function detenerAudioLibro() {
+        function detenerAudioCompleto() {
             if (synth.speaking || synth.pending) {
                 synth.cancel();
                 utteranceActivo = null;
                 mensajeSpan.innerText = '⏹️ Audio detenido';
-                setTimeout(() => { if(mensajeSpan.innerText === '⏹️ Audio detenido') mensajeSpan.innerText = '📌 Listo'; }, 1200);
+                setTimeout(() => {
+                    if (mensajeSpan.innerText === '⏹️ Audio detenido') 
+                        mensajeSpan.innerText = '📌 Listo';
+                }, 1200);
             } else {
-                mensajeSpan.innerText = '🎧 Sin audio activo';
-                setTimeout(() => { if(mensajeSpan.innerText === '🎧 Sin audio activo') mensajeSpan.innerText = '📌 Listo'; }, 1000);
+                mensajeSpan.innerText = '🎧 No había audio activo';
+                setTimeout(() => {
+                    if (mensajeSpan.innerText === '🎧 No había audio activo') 
+                        mensajeSpan.innerText = '📌 Listo';
+                }, 1000);
             }
         }
         
-        btnAudio.addEventListener('click', hablarLibro);
-        btnStop.addEventListener('click', detenerAudioLibro);
+        btnEscuchar.addEventListener('click', escucharEnsenanzas);
+        btnDetener.addEventListener('click', detenerAudioCompleto);
         
         // ==============================================================
-        // 4. SERVICE WORKER INLINE (OFFLINE TOTAL)
+        // 4. SERVICE WORKER INLINE (OFFLINE TOTAL CON BLOB)
         if ('serviceWorker' in navigator) {
-            const swInlineCode = `
-                const CACHE_NAME = 'personal-dev-pwa-v2';
+            const swCode = `
+                const CACHE_NAME = 'personal-dev-pwa-v3';
                 self.addEventListener('install', event => {
                     event.waitUntil(
                         caches.open(CACHE_NAME).then(cache => {
@@ -443,29 +482,35 @@
                     );
                 });
                 self.addEventListener('activate', event => {
-                    event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k)))));
+                    event.waitUntil(
+                        caches.keys().then(keys => Promise.all(keys.map(k => k !== CACHE_NAME && caches.delete(k))))
+                    );
                     self.clients.claim();
                 });
             `;
-            const blobSW = new Blob([swInlineCode], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(blobSW);
-            navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ SW offline registrado')).catch(err => console.warn('SW error:', err));
+            const swBlob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swUrl).then(reg => {
+                console.log('✅ Service Worker registrado (offline)');
+            }).catch(err => console.warn('SW error:', err));
         }
         
         // ==============================================================
-        // 5. MANIFEST INLINE (BLOB) PARA INSTALABLE
+        // 5. MANIFEST INLINE (BLOB) PARA INSTALABLE EN MÓVILES
         const manifestObj = {
-            name: "Desarrollo Personal · Libros esenciales",
-            short_name: "Crecimiento PWA",
+            name: "Desarrollo Personal · Enseñanzas Clave",
+            short_name: "Crece PWA",
             description: "Resúmenes de desarrollo personal con enseñanzas y audio offline.",
             start_url: "./",
             display: "standalone",
             theme_color: "#007A8A",
             background_color: "#F1F9FC",
+            orientation: "portrait",
             icons: [{
                 src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23007A8A'/%3E%3Cpath fill='%23FFD966' d='M35 40 L65 40 L60 55 L40 55 Z M46 58 L54 58 L52 70 L48 70 Z'/%3E%3C/svg%3E",
                 sizes: "any",
-                type: "image/svg+xml"
+                type: "image/svg+xml",
+                purpose: "any maskable"
             }]
         };
         const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
@@ -474,7 +519,7 @@
         manifestLink.href = URL.createObjectURL(manifestBlob);
         document.head.appendChild(manifestLink);
         
-        // Meta theme-color
+        // Meta theme-color para personalización visual
         let themeMeta = document.querySelector('meta[name="theme-color"]');
         if (!themeMeta) {
             themeMeta = document.createElement('meta');
@@ -483,9 +528,9 @@
             document.head.appendChild(themeMeta);
         }
         
-        // Pequeño indicador modo standalone
+        // Detecta si la app se ejecuta en modo standalone (instalada)
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('📱 Ejecutándose como app instalada');
+            console.log('📱 App instalada y ejecutándose como standalone');
         }
     })();
 </script>
